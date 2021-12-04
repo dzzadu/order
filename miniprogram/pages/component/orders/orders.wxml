@@ -1,0 +1,38 @@
+<view class="main">
+    <navigator url="../address/address">
+        <view wx:if="{{hasAddress}}" class="orders-address">
+            <text class="orders-address-name">收货人: {{address.name}}</text>
+            <text class="orders-address-phone">电话: {{address.phone}}</text>
+            <view class="orders-address-detail">{{address.detail}}</view>
+        </view>
+        <view wx:else class="orders-no-address">添加收货地址</view>
+    </navigator>
+
+    <view class="orders-box">
+    <view class="orders-title">订单详情</view>
+    <view wx:for="{{orders}}" wx:key="index" class="orders-list">
+        <view class="list_img">
+            <image src="{{item.image}}"></image>        
+        </view>
+        <view class="list_content">
+            <view class="list_content_left">
+                <view class="orders-pro-name">{{item.title}}</view>
+                <view class="orders-pro-price">￥{{item.price}}</view>
+                <view class="orders-count-num">×{{item.num}}</view>
+            </view>
+            <view class="list_content_right">
+                <text class="num">￥{{total}}</text>
+            </view>
+        </view>
+    </view>
+    </view>
+
+    <view class="orders-remark">
+        <label>备注</label>
+    <textarea value="{{remark}}" name="remark" bindinput="remark" placeholder='默认常温，常规糖，如有口味要求，请输入备注' class='remark_textarea'></textarea>
+    </view>
+    <view class="orders-footer">
+        <view class="orders-footer-total">付款合计：<text class="num">￥{{total}}</text></view>
+        <view class="orders-footer-btn" bindtap="toPay">去付款</view>
+    </view>
+</view>

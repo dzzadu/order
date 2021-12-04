@@ -1,0 +1,42 @@
+<view class="main">
+    <view class="header">
+        <image src="{{thumb}}" class="thumb"></image>
+        <text class="nickname">{{nickname}}</text>
+        <text bindtap="admin" class="about">管理员></text>
+    </view>
+    <view class="address-box">
+        <view class="address-manage">
+            <navigator url="/pages/component/address/address">地址管理</navigator>
+        </view>
+        <view wx:if="{{hasAddress}}" class="address-list">
+            <view>{{address.name}}　　{{address.phone}}</view>
+            <view>{{address.detail}}</view>
+        </view>
+    </view>
+    <view class="orders-box">
+        <view class="orders">我的订单</view>
+        <view style="margin:60rpx auto;text-align: center;" wx:if="{{orderList.length == 0}}">--暂无订单--</view>
+        <view class="orders-list" wx:for="{{orderList}}" wx:key="index">
+            <view class="orders-number">
+            <view>订单编号：{{item.orderId}}</view>
+            <view bindtap="del" data-index="{{index}}" class="del">删除</view>
+            </view>
+            <view class="orders-detail">
+                <image src="{{item.orders[0].image}}"></image>
+                <view class="detail">
+                    <text wx:for="{{item.orders}}" wx:for-item="I" wx:for-index="i" wx:key="i">{{I.title}}<text wx:if="{{i<item.orders.length-1}}"> + </text>
+                    </text>
+                    <view>备注：{{item.remark == ''?'无':item.remark}}</view>
+                    <view>共{{item.orders.length}}件</view>
+                </view>
+                <view>
+                    <text class="orders-status" style="color: {{item.state?'#1eca44':'#b8a60b'}};">{{item.state?'已付款':'未付款'}}</text>
+                </view>
+            </view>
+            <view class="orders-footer">
+                <text>实付：<text style="color: crimson;">￥{{item.total}}</text></text>
+                <button size="mini" class="orders-btn" data-index="{{index}}" bindtap="payOrders" style="background-color: {{item.state?'#1eca44':'#b8a60b'}};">{{item.state?'查看':'付款'}}</button>
+            </view>
+        </view>
+    </view>
+</view>

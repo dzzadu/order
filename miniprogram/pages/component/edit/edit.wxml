@@ -1,0 +1,28 @@
+<view>
+  <form bindsubmit="updata">
+    <picker bindchange="bindPickerChange" value="{{idx}}" range="{{classifyList}}" range-key="cate">
+      <view class="picker">
+        <label>商品类目：</label> {{classifyList[idx].cate}}
+      </view>
+    </picker>
+  <view class="list">
+    <view class="item">
+      <label>商品名称：</label>
+      <input type="text" name="title" value="{{order.title}}" />
+    </view>
+    <view class="item">
+      <label>价　　格：</label>
+      <input type="text" name="price" value="{{order.price}}" />
+    </view>
+    <view class="detail">
+      <label>简　　介：</label>
+      <textarea type="text" name="detail"value="{{order.detail}}" />
+    </view>
+  </view>
+  <view class="upImg">
+    <image wx:if="{{order.image}}" src="{{order.image}}" bindtap="upImg"></image>
+    <image wx:else src="/images/pic.jpg" bindtap="upImg"></image>
+  </view>
+  <button form-type="submit">确认</button>
+  </form>
+</view>

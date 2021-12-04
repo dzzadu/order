@@ -1,0 +1,91 @@
+<view class="mian">
+  <view class="title">
+    <view bindtap="changeTitle" data-index="{{index}}" wx:for="{{itemList}}" wx:key="index" class="item {{idx == index?'in':''}}">{{item}}</view>
+  </view>
+  <!-- 菜单管理 -->
+  <swiper current="{{idx}}" duration="0">
+    <swiper-item>
+    <view class="content">
+      <view class="categroy-left">
+        <view wx:for="{{category}}" wx:key="index" data-id="{{item.id}}" data-index="{{index}}"
+            bindtap="switchTab"
+            class="cate-list {{curIndex === index?'on':''}}">{{item.name}}</view>
+    </view>
+    <scroll-view class="categroy-right" scroll-y scroll-into-view="{{toView}}" scroll-with-animation="true">
+         <block wx:for="{{detail}}" wx:for-index="idx" wx:key="idx">
+            <view id="{{item.id}}" class="cate-box">
+                <view class="product" bindtouchstart="hua" data-id="{{item.id}}">
+                    <view class="product-list" wx:for="{{item.goodsList}}" wx:key="index" wx:for-item="val">
+                    <view class="product-list_left">
+                      <image src="{{val.image}}"></image>
+                      <text>{{val.title}}</text>
+                    </view>
+                    <view class="product-list_right">
+                      <image bindtap="clickBtn" data-index="{{index}}" data-item="{{val}}" data-type="bj" src="/images/bj.jpg"></image>
+                      <image bindtap="clickBtn" data-index="{{index}}" data-item="{{val}}"  data-type="del" src="/images/del.jpg"></image>
+                    </view>
+                    </view>
+                </view>
+            </view>
+        </block>
+    </scroll-view>
+    </view>
+    </swiper-item>
+    <!-- 上传商品 -->
+    <swiper-item>
+      <form bindsubmit="upload">
+        <picker bindchange="bindPickerChange" value="{{pickerIdx}}" range="{{category}}" range-key="name">
+          <view class="picker">
+            <label>商品类目：</label> {{category[pickerIdx].name}}
+          </view>
+        </picker>
+      <view class="list">
+        <view class="item">
+          <label>商品名称：</label>
+          <input type="text" name="title" value="{{order.title}}" />
+        </view>
+        <view class="item">
+          <label>价　　格：</label>
+          <input type="text" name="price" value="{{order.price}}" />
+        </view>
+        <view class="detail">
+          <label>简　　介：</label>
+          <textarea type="text" name="detail"value="{{order.detail}}" />
+        </view>
+      </view>
+      <view class="upImg">
+        <image wx:if="{{imgUrl}}" src="{{imgUrl}}"></image>
+        <image wx:else src="/images/pic.jpg" bindtap="upImg"></image>
+      </view>
+      <button form-type="submit" class="btn">确认</button>
+      </form>
+    </swiper-item>
+    <!-- 查看订单 -->
+    <swiper-item>
+      <view class="orders-box">
+        <view style="margin:60rpx auto;text-align: center;" wx:if="{{orderList.length == 0}}">--暂无订单--</view>
+        <view class="orders-list" wx:for="{{orderList}}" wx:key="index">
+            <view class="orders-number">
+            <view>订单编号：{{item.orderId}}</view>
+            </view>
+            <view class="orders-detail">
+                <image src="{{item.orders[0].image}}"></image>
+                <view class="detail2">
+                    <text wx:for="{{item.orders}}" wx:for-item="I" wx:for-index="i" wx:key="i">{{I.title}}<text wx:if="{{i<item.orders.length-1}}"> + </text>
+                    </text>
+                    <view>备注：{{item.remark == ''?'无':item.remark}}</view>
+                    <view>共{{item.orders.length}}件</view>
+                </view>
+                <view>
+                    <text class="orders-status" style="color: {{item.state?'#1eca44':'#b8a60b'}};">{{item.state?'已付款':'未付款'}}</text>
+                </view>
+            </view>
+            <view class="orders-footer">
+                <text>实付：<text style="color: crimson;">￥{{item.total}}</text></text>
+                <button size="mini" class="orders-btn" data-index="{{index}}" bindtap="payOrders" style="background-color: {{item.state?'#1eca44':'#b8a60b'}};">查看</button>
+            </view>
+        </view>
+    </view>
+    </swiper-item>
+  </swiper>
+</view>

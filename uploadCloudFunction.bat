@@ -1,0 +1,1 @@
+"E:\微信开发者工具\微信web开发者工具\cli.bat" cloud functions deploy --e cloud1-7ge0zcv3c0185e18 --n quickstartFunctions --r --project "C:\Users\11404\OneDrive\桌面\dzz" --report
